@@ -18,7 +18,7 @@ SELECT * FROM Filmes WHERE Ano > 2000
 SELECT * FROM Filmes WHERE Duracao > 100 AND Duracao < 150 ORDER BY Duracao Asc
 
 -- 7 - Buscar a quantidade de filmes lançadas no ano, agrupando por ano, ordenando pela duracao em ordem decrescente
-SELECT Ano, AVG(Duracao) AS DuracaoMedia FROM Filmes GROUP BY Ano ORDER BY DuracaoMedia Desc
+SELECT Ano, COUNT(*) AS Quantidade FROM Filmes GROUP BY Ano ORDER BY Quantidade DESC;
 
 -- 8 - Buscar os Atores do gênero masculino, retornando o PrimeiroNome, UltimoNome
 SELECT PrimeiroNome, UltimoNome FROM Atores WHERE Genero = 'M'
@@ -27,11 +27,10 @@ SELECT PrimeiroNome, UltimoNome FROM Atores WHERE Genero = 'M'
 SELECT PrimeiroNome, UltimoNome FROM Atores WHERE Genero = 'F' ORDER BY PrimeiroNome
 
 -- 10 - Buscar o nome do filme e o gênero
-SELECT f.Nome, g.Genero FROM Filmes f JOIN FilmesGenero fg ON fg.Id = f.Id JOIN Generos g ON g.Id = fg.Id
+SELECT f.Nome, g.Genero FROM Filmes f JOIN FilmesGenero fg ON fg.IdFilme = f.Id JOIN Generos g ON g.Id = fg.IdGenero
 
 -- 11 - Buscar o nome do filme e o gênero do tipo "Mistério"
-SELECT f.Nome, g.Genero FROM Filmes f JOIN FilmesGenero fg ON fg.Id = f.Id JOIN Generos g ON g.Id = fg.Id WHERE g.Genero = 'Mistério'
+SELECT f.Nome, g.Genero FROM Filmes f JOIN FilmesGenero fg ON fg.IdFilme = f.Id JOIN Generos g ON g.Id = fg.IdGenero WHERE g.Genero = 'Mistério'
 
 -- 12 - Buscar o nome do filme e os atores, trazendo o PrimeiroNome, UltimoNome e seu Papel
-SELECT f.Nome, a.PrimeiroNome, a.UltimoNome, ef.Papel FROM Atores a JOIN ElencoFilme ef ON ef.Id = a.Id JOIN Filmes f ON f.Id = ef.Id
-
+SELECT f.Nome, a.PrimeiroNome, a.UltimoNome, ef.Papel FROM Atores a JOIN ElencoFilme ef ON ef.IdAtor = a.Id JOIN Filmes f ON f.Id = ef.IdFilme
